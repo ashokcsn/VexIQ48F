@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VEX IQ Robot Operations Manual - Team 48F</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-hover: #0ea5e9;
+      --accent: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --code-bg: #090d16;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 24px;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    header {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .header-title h1 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    .header-title p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-primary { background: rgba(56, 189, 248, 0.15); color: var(--primary); border: 1px solid var(--primary); }
+    .badge-accent { background: rgba(245, 158, 11, 0.15); color: var(--accent); border: 1px solid var(--accent); }
+    .badge-success { background: rgba(16, 185, 129, 0.15); color: var(--success); border: 1px solid var(--success); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .card h2 {
+      font-size: 1.35rem;
+      color: var(--primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card h3 {
+      font-size: 1.1rem;
+      color: var(--accent);
+      margin: 16px 0 8px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--card-border);
+    }
+    th {
+      background: rgba(15, 23, 42, 0.6);
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    code {
+      background: var(--code-bg);
+      color: var(--primary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9em;
+    }
+
+    /* Controller Layout Visual */
+    .controller-box {
+      background: var(--code-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 20px;
+      font-family: monospace;
+      white-space: pre;
+      line-height: 1.4;
+      color: #38bdf8;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+
+    .callout {
+      border-left: 4px solid var(--primary);
+      background: rgba(56, 189, 248, 0.08);
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 14px 0;
+    }
+    .callout-warning {
+      border-left-color: var(--accent);
+      background: rgba(245, 158, 11, 0.08);
+    }
+    .callout-success {
+      border-left-color: var(--success);
+      background: rgba(16, 185, 129, 0.08);
+    }
+    ul, ol {
+      padding-left: 20px;
+      margin: 8px 0;
+    }
+    li {
+      margin-bottom: 6px;
+    }
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--card-border);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="header-title">
+        <h1>VEX IQ Robot Operations Manual</h1>
+        <p>Complete Reference Guide for Driver Control &amp; Autonomous Routines</p>
+      </div>
+      <div>
+        <span class="badge badge-primary">Team 48F</span>
+        <span class="badge badge-success">VEXcode IQ 2.0</span>
+      </div>
+    </header>
+
+    <!-- Subsystems & Hardware -->
+    <div class="card" style="margin-bottom: 28px;">
+      <h2>Hardware Subsystems &amp; Port Mapping</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Subsystem</th>
+            <th>Device Name</th>
+            <th>Hardware Type &amp; Ports</th>
+            <th>Role &amp; Mechanism Configuration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Drivetrain</strong></td>
+            <td><code>Drivetrain</code></td>
+            <td>SmartDrive &bull; Ports 1, 2 + Gyro 0</td>
+            <td>2-motor drive, 200mm wheels, 2:5 gear ratio. Uses integrated gyro for precision turning.</td>
+          </tr>
+          <tr>
+            <td><strong>Catapult</strong></td>
+            <td><code>Cata</code></td>
+            <td>MotorGroup (2 Motors) &bull; Ports 5, 6</td>
+            <td>Winds backward against rubber bands, launches forward to throw bags. Motor A reversed.</td>
+          </tr>
+          <tr>
+            <td><strong>Claw Arm</strong></td>
+            <td><code>Claw</code></td>
+            <td>MotorGroup (2 Motors) &bull; Ports 3, 4</td>
+            <td>Lowers forward to the floor, lifts backward over catapult bucket. Motor A reversed.</td>
+          </tr>
+          <tr>
+            <td><strong>Pneumatics</strong></td>
+            <td><code>Claw_Grab</code></td>
+            <td>Pneumatics &bull; Port 7</td>
+            <td>Controls <code>cylinder1</code> to clamp and release bags; compressor turns ON at start.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Driving Skills -->
+    <div class="card" style="margin-bottom: 28px;">
+      <h2>Driving Skills Program (<code>src/DrivingSkills.iqblocks</code>)</h2>
+      <p>Instant startup with zero gyro lag. Features automated macros, manual recovery overrides, and dual-speed modes.</p>
+      
+      <div class="controller-box">
+                   [  L-Up  ]            [  R-Up  ]
+                   [ L-Down ]            [ R-Down ]
+                 +----------------------------------+
+                 |   (L)                      (R)   |
+                 |  Stick                    Stick  |
+                 |                                  |
+                 |  (E-Up)                  (F-Up)  |
+                 | (E-Down)                (F-Down) |
+                 +----------------------------------+
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Control</th>
+            <th>Action</th>
+            <th>Mode</th>
+            <th>Operational Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Joysticks</strong></td>
+            <td>Split Arcade Drive</td>
+            <td>Drive</td>
+            <td>Left stick controls forward/reverse throttle; Right stick controls steering.</td>
+          </tr>
+          <tr>
+            <td><strong><code>Button E-Up</code></strong></td>
+            <td>Auto Grab &amp; Dump</td>
+            <td>Macro</td>
+            <td>Automated sequence: lowers claw, drives 100mm, clamps bag, lifts 140&deg;, dumps into catapult, and returns arm.</td>
+          </tr>
+          <tr>
+            <td><strong><code>Button L-Up</code></strong></td>
+            <td>Auto Throw &amp; Reload</td>
+            <td>Macro</td>
+            <td>Spins catapult forward for <code>CataThrowTimeSec</code> (1.0s), rewinds for <code>CataWindTime</code> (2.0s), locks in hold.</td>
+          </tr>
+          <tr>
+            <td><strong><code>Button E-Down</code></strong></td>
+            <td>Clamp Toggle</td>
+            <td>Manual</td>
+            <td>Toggles pneumatic clamp between open and clamped. Perfect for manual recovery if a bag is dropped.</td>
+          </tr>
+          <tr>
+            <td><strong><code>Button R-Up</code></strong></td>
+            <td>Manual Claw UP</td>
+            <td>Manual</td>
+            <td>Lifts claw arm while held. Automatically brakes and holds position when released.</td>
+          </tr>
+          <tr>
+            <td><strong><code>Button R-Down</code></strong></td>
+            <td>Manual Claw DOWN</td>
+            <td>Manual</td>
+            <td>Lowers claw arm while held. Automatically brakes and holds position when released.</td>
+          </tr>
+          <tr>
+            <td><strong><code>Button L-Down</code></strong></td>
+            <td>Manual Catapult Wind</td>
+            <td>Manual</td>
+            <td>Winds catapult backward while held. Use for emergency re-priming or adjusting rubber band tension.</td>
+          </tr>
+          <tr>
+            <td><strong><code>Button F-Up</code></strong></td>
+            <td>100% Turbo Speed</td>
+            <td>Speed</td>
+            <td>Tap once to set drivetrain speed to 100% for rapid field crossing.</td>
+          </tr>
+          <tr>
+            <td><strong><code>Button F-Down</code></strong></td>
+            <td>50% Precision Speed</td>
+            <td>Speed</td>
+            <td>Tap once to drop drivetrain speed to 50% for fine alignment at the loading station.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Autonomous Routines -->
+    <div class="card" style="margin-bottom: 28px;">
+      <h2>Autonomous Routines (<code>src/Auton-48F-WithInertial.iqblocks</code>)</h2>
+      <p>Modular autonomous routine utilizing custom function blocks (<code>pickAndLoadBag</code> and <code>fireAndReloadCatapult</code>) and absolute gyro heading tracking.</p>
+
+      <div class="callout callout-success">
+        <strong>Why "WithInertial" is Recommended:</strong>
+        Uses <code>turn to heading (TurnAngleDeg)</code> and <code>turn to heading (0)</code>. This locks the robot to absolute field coordinates on every cycle, eliminating angle drift across the entire 60-second Skills match!
+      </div>
+
+      <h3>Autonomous Bag Cycle Workflow</h3>
+      <ol>
+        <li><strong>Pick &amp; Load (<code>pickAndLoadBag</code>)</strong>: Lowers arm <code>ClawAboveGroundDeg</code>, drives forward <code>MoveBeforePickmm</code>, clamps, lifts <code>ClawMotorMoveDeg</code> over bucket, releases, returns arm.</li>
+        <li><strong>Drive Forward</strong>: Drives forward <code>DriveForwardDistMM</code> mm toward the launch zone.</li>
+        <li><strong>Aim &amp; Throw</strong>: Turns to heading <code>TurnAngleDeg</code>, fires catapult for <code>CataThrowTimeSec</code>, rewinds for <code>CataWindTime</code>, holds tension.</li>
+        <li><strong>Straighten &amp; Return</strong>: Turns back to heading <code>0&deg;</code>, reverses <code>DriveForwardDistMM</code> mm back into the loading zone wall, settles for <code>WaitAtLoadingZoneSec</code>, and repeats.</li>
+      </ol>
+    </div>
+
+    <!-- Configurable Tuning Parameters -->
+    <div class="card" style="margin-bottom: 28px;">
+      <h2>Configurable Parameters &amp; Timing Guide</h2>
+      <p>All parameters can be tuned directly at the top of the <code>when started</code> stack in any of the programs:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Variable Name</th>
+            <th>Default</th>
+            <th>Programs</th>
+            <th>Description &amp; Optimization Tips</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>AutonDurationSec</code></td>
+            <td><code>60.0 s</code></td>
+            <td>Auton</td>
+            <td>Total autonomous match duration before clean shutdown.</td>
+          </tr>
+          <tr>
+            <td><code>DriveForwardDistMM</code></td>
+            <td><code>400.0 mm</code></td>
+            <td>Auton</td>
+            <td>Distance to drive forward from loading zone toward the goal.</td>
+          </tr>
+          <tr>
+            <td><code>TurnAngleDeg</code></td>
+            <td><code>45.0&deg;</code></td>
+            <td>Auton</td>
+            <td>Angle to turn right to face the goal before firing.</td>
+          </tr>
+          <tr>
+            <td><code>CataThrowTimeSec</code></td>
+            <td><code>1.0 s</code></td>
+            <td>All</td>
+            <td>Forward motor spin time to launch. <em>Tune down to <code>0.4s &ndash; 0.5s</code> to shave cycle time.</em></td>
+          </tr>
+          <tr>
+            <td><code>CataWindTime</code></td>
+            <td><code>2.0 s</code></td>
+            <td>All</td>
+            <td>Reverse motor spin time to rewind and tension the catapult.</td>
+          </tr>
+          <tr>
+            <td><code>WaitBeforeClampSec</code></td>
+            <td><code>0.2 s</code></td>
+            <td>All</td>
+            <td>Settle delay after driving into the bag before extending the clamp.</td>
+          </tr>
+          <tr>
+            <td><code>WaitClampSettleSec</code></td>
+            <td><code>0.5 s</code></td>
+            <td>All</td>
+            <td>Delay allowing pneumatics to firmly grip bag before lifting. <em>Can be tuned to <code>0.25s &ndash; 0.3s</code>.</em></td>
+          </tr>
+          <tr>
+            <td><code>WaitDropSettleSec</code></td>
+            <td><code>0.2 s</code></td>
+            <td>All</td>
+            <td>Delay after releasing bag before returning claw arm forward.</td>
+          </tr>
+          <tr>
+            <td><code>WaitAtLoadingZoneSec</code></td>
+            <td><code>0.2 s</code></td>
+            <td>Auton</td>
+            <td>Settle delay after reversing back to loading zone wall before starting next cycle.</td>
+          </tr>
+          <tr>
+            <td><code>MoveBeforePickmm</code></td>
+            <td><code>100.0 mm</code></td>
+            <td>All</td>
+            <td>Forward drive distance to approach bag during loading sequence.</td>
+          </tr>
+          <tr>
+            <td><code>ClawAboveGroundDeg</code></td>
+            <td><code>20.0&deg;</code></td>
+            <td>All</td>
+            <td>Degrees to lower claw arm forward from resting height to reach the floor.</td>
+          </tr>
+          <tr>
+            <td><code>ClawMotorMoveDeg</code></td>
+            <td><code>140.0&deg;</code></td>
+            <td>All</td>
+            <td>Degrees to lift claw arm backward over catapult basket.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Match Day Checklist -->
+    <div class="card">
+      <h2>Competition Match-Day Checklist</h2>
+      <ul>
+        <li><strong>Air Pressure</strong>: Ensure pneumatic tank is pressurized and compressor turns ON at startup.</li>
+        <li><strong>Autonomous Alignment</strong>: For <code>Auton-48F-WithInertial</code>, square the robot flush against the loading zone wall pointing straight ahead (0&deg;) before starting program calibration.</li>
+        <li><strong>Driving Skills Ready</strong>: Driving skills has zero calibration delay. Start driving the moment the buzzer sounds!</li>
+        <li><strong>Catapult Tension</strong>: Ensure rubber bands are properly seated on the catapult arm. Use <code>Button L-Down</code> for manual tension check if needed.</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>&copy; 2026 VEX IQ Team 48F &bull; Maintained and automatically synced with robot code repository.</p>
+    </footer>
+  </div>
+
+</body>
+</html>
